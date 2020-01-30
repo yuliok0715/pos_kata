@@ -18,6 +18,13 @@ class Product:
                 cost = quantity * self.retail_price.value
             return cost
 
+    def calculate_cost_without_pack_discount(self, quantity: int) -> float:
+        if not self.retail_price:
+            raise AttributeError("You haven't set retail price for product yet!")
+        else:
+            cost = quantity * self.retail_price.value
+            return cost
+
     def set_retail_price(self, new_price: float):
         if new_price < 0:
             raise AttributeError("Price can't be less than zero!")
@@ -36,3 +43,6 @@ class Product:
         else:
             price = VolumePrice(value=new_price, quantity=quantity)
             self.volume_price = price
+
+    def is_pack_discount_can_be_applied(self, quantity: int) -> bool:
+        return self.volume_price and quantity >= self.volume_price.quantity
